@@ -6,11 +6,11 @@ use std::time::Duration;
 
 fn main() {
     println!("HELLO WORLD");
-    let led = LED::new(19);
-    let led2 = LED::new(26);
-    let led3 = LED::new(20);
-    let led4 = LED::new(21);
-    /*
+    let mut led = LED::new(19);
+    let mut led2 = LED::new(26);
+    let mut led3 = LED::new(20);
+    let mut led4 = LED::new(21);
+    /*  
           led4.on();
           sleep(Duration::from_millis(100));
           led4.off();
@@ -20,36 +20,41 @@ fn main() {
           led3.off();
           sleep(Duration::from_millis(100));
     */
+        for key in Keyboard::new() {
+            match key {
+                //right wheel bkwrd
+                Keys::Up => {
+                    led.toggle();
+                }
+                //left wheel bkwrd
+                Keys::Down => {
+                    led2.toggle();
+                }
+                //left wheel fwd 
+                Keys::Left => {
+                    led3.toggle();
 
-    for key in Keyboard::new() {
-        match key {
-            Keys::Up => {
-                sleep(Duration::from_millis(10));
-                led.on()
+                }
+                //right wheel fwd 
+                Keys::Right => {
+                    led4.toggle();
+                }
+                Keys::Enter => break,
+                _ => {}
+                
             }
-            Keys::Down => {
-                sleep(Duration::from_millis(10));
-                led2.on()
-            }
-            Keys::Left => {
-                sleep(Duration::from_millis(10));
-                led3.on()
-            }
-            Keys::Right => {
-                sleep(Duration::from_millis(10));
-                led4.on()
-            }
-            Keys::Enter => break,
-            _ => {}
         }
-        led4.off();
-        led3.off();
-        led2.off();
-        led.off();
-    }
-
-    led2.close();
-    led.close();
-    led4.close();
+/*
+    led.on();
+    led2.on();
+    sleep(Duration::from_millis(4000));
+*/
+    led3.off();
     led3.close();
+    led4.off();
+    led4.close();
+    led.off();
+    led2.off();
+    led.close();
+    led2.close();
 }
